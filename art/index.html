@@ -41,10 +41,10 @@
 				margin-left: auto;
 				margin-right: auto;
 			}
-            #loading {
+            #loading, #title {
+                opacity: 0;
                 -webkit-transition: opacity 1s; /* Safari */
 				transition: opacity 1s;
-
             }
 		</style>
 		<script>
@@ -91,6 +91,10 @@
 				}, 1000);
 			}
 
+            function displayID(id){
+                document.getElementById(id).style.opacity = 1;
+            }
+
 			function initArt(){
 
 				var vertical = 250;
@@ -103,6 +107,9 @@
 				var valign;
 				var label_halign;
 				var lalign;
+
+                document.body.innerHTML += "<img id='loading' onload='displayID(\"loading\")' style='width:400; top:350' class='center' src='images/loading.png'>";
+                document.body.innerHTML += "<img id='title' onload='displayID(\"title\")' style='width: 1100px; top:0;' class='center' src='images/title.png'>";
 
 				for (var i = 0; i < num; i++) {
 
@@ -200,13 +207,11 @@
 					//alert(vertical);
 					vertical = vertical + gap + (2 * frame_thickness) + image_height;
 				}
-				document.body.innerHTML += "<img onload='display();' style='width: 800px; top:" + (vertical + 40) + "' class='center' src='images/copyright.png'>" +
+				document.body.innerHTML += "<img id='copyright' onload='displayID(\"copyright\"); display();' style='width: 800px; top:" + (vertical + 40) + "' class='center' src='images/copyright.png'>" +
 											"<a href='mailto:nt2@nehoran.com' style='right:8px; width: 174px; height: 22px; top:" + (vertical + 158) + "' class='center'></a>";
             }
 		</script>
 	</head>
-	<body onload="initArt()" style="background-size: 100%; background-color: c4a98c" background="images/background.jpg">
-        <img style='width: 1100px; top:0;' class='center' src='images/title.png'>
-        <img id="loading" style="width:400; top:350" class="center" src="images/loading.png">
+	<body onload="initArt()" style="background-size: 100%; background-color: a38665" background="images/background.jpg">
 	</body>
 </html>
