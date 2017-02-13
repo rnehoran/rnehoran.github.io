@@ -70,6 +70,14 @@
 				["https://lh3.googleusercontent.com/faKMEAgA96KHRyQIkVvajayjSykFJVVpx2xu6Sq7pE4mZPSoi1sMAHMc5CB73u_vvq_1YWBZFq5HU2A=w1370-h706-rw", "Roadside", "August 2016", "Roy Nehoran","Pencil on Paper", 8.5, 11, 513, 706]];
 			var num = art_details.length;
 
+            function display(){
+				x = document.getElementsByClassName("art_container");
+				setTimeout(function(){
+					for (j = 0; j < x.length; j++) {
+					    x[j].style.opacity = 1;
+					}
+				}, 1000);
+			}
 
 			function initArt(){
 
@@ -185,14 +193,6 @@
 				document.body.innerHTML += "<img onload='display();' style='width: 800px; top:" + (vertical + 40) + "' class='copyright' src='images/copyright.png'>" + 
 											"<a href='mailto:nt2@nehoran.com' style='right:8px; width: 174px; height: 22px; top:" + (vertical + 158) + "' class='copyright'></a>";
             }
-            function display(){
-				x = document.getElementsByClassName("art_container");
-				setTimeout(function(){
-					for (j = 0; j < x.length; j++) {
-					    x[j].style.opacity = 1;
-					}					
-				}, 1000);
-			}
 		</script>
 	</head>
 	<body onload="initArt()" style="background-size: 100%;" background="images/Wood Background.jpg">
