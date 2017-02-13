@@ -64,12 +64,20 @@
 
 			var art_details = [
                 ["https://lh3.googleusercontent.com/w_qeHYuXil4KCYP3P8syZNK-Ggj5LgRP5D8LhOdcvhOzz8Wx8PTzlKxyKNEMmw0jeBkxgoZSRfP8IGI_g_YZJxlDp3zA2zjN4OFvGVWBEb3tdBLdLjnljUIQLvv_ju6Gb6-N88Hlv2fmY9Z4eaCLvc2jhcqbR5Z4kEx1rRdjybAaua6KESZq7aBKlKWSCMdGuQrDxx3Of-bJG_X-K6wAEmE2MA4xTjkkOLXplAnZKNhZb_KLbZZc1z_92NhRRJmrY1xLTLU7tIht348tPq7nD-y_pTabGF5mHZ9bkAXXFx9eQWpEv-JNvXLBgWCXcjdWomDM8k-KdpehuSIFdU4s6tc9iCQubw2xxKHw_3mcWE0tuTARUn3FlaSsptYmb9NJLrKVLwofF7bLPpwKvfCnMO-8Cwm8jDwIQtBEjNss-Mdd6GperXfv5fsgJmvOdw3JIF3fb72DRJ6yJTr2oVBIETwkLnTTJn04RfHdhSipJkxFu_Ti18fe6NEuWcNPR83cjc5uG3g7DlRyKG3-1ucwi18hoEBEVIYdz8yZ8_1TfwmWHi0d-lO8bpRuz-R5Bb4Hxt6dDFh6czSc7LkHTm70tGQk6WzTlEEScHFt0K4LMu3Dkm4z32OUhnx4f-DohAM76YvAB4a7IOum7HxgY6ANODFA_vWRDMcSxqNXT7E45g=w373-h292-no", "Ladybug on Leaf", "January 2017", "Roy Nehoran","Acrylic on Canvas", 11, 8, 1272, 997],
-                ["https://drive.google.com/uc?export=download&id=0B01yLbkETykndlg4LTJZUFJJR0E", "Ladybug on Leaf", "January 2017", "Roy Nehoran","Acrylic on Canvas", 11, 8, 1272, 997],
+                ["https://drive.google.com/uc?id=0B01yLbkETykndlg4LTJZUFJJR0E", "Ladybug on Leaf", "January 2017", "Roy Nehoran","Acrylic on Canvas", 11, 8, 1272, 997],
 				["https://lh4.googleusercontent.com/9QBcjLgE_dL1oFdZqG1x7BIIvxlnvZnnoFYuxrIpyCkNtUuUieCqXM20ZIwAbqpnXJ9T6YwCsCROGko=w1370-h704-rw", "Israeli Coin", "November 2016", "Roy Nehoran","Acrylic on Canvas", 12, 16, 559, 704],
 				["https://lh3.googleusercontent.com/N5bfnFlWR7PbJy-eP1ju9_IQnNfhP9eve5lyWJD1Oxb_nFdsVAfXfH8E8-kurAKgDEv2-u0niepM3Qg=w1370-h704-rw", "Flying Eagle", "September 2016", "Roy Nehoran","Charcoal on Paper", 8.5, 9.5, 1230, 704],
 				["https://lh3.googleusercontent.com/faKMEAgA96KHRyQIkVvajayjSykFJVVpx2xu6Sq7pE4mZPSoi1sMAHMc5CB73u_vvq_1YWBZFq5HU2A=w1370-h706-rw", "Roadside", "August 2016", "Roy Nehoran","Pencil on Paper", 8.5, 11, 513, 706]];
 			var num = art_details.length;
 
+            function display(){
+				x = document.getElementsByClassName("art_container");
+				setTimeout(function(){
+					for (j = 0; j < x.length; j++) {
+					    x[j].style.opacity = 1;
+					}
+				}, 1000);
+			}
             function display(){
 				x = document.getElementsByClassName("art_container");
 				setTimeout(function(){
