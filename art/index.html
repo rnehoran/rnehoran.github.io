@@ -82,12 +82,14 @@
 			var num = art_details.length;
 
             function display(){
-                document.getElementById("loading").style.opacity = 0;
-				x = document.getElementsByClassName("art_container");
 				setTimeout(function(){
-					for (j = 0; j < x.length; j++) {
-					    x[j].style.opacity = 1;
-					}
+                    document.getElementById("loading").style.opacity = 0;
+                    x = document.getElementsByClassName("art_container");
+                    setTimeout(function(){
+                        for (j = 0; j < x.length; j++) {
+                            x[j].style.opacity = 1;
+                        }
+                    }, 500);
 				}, 1000);
 			}
 
