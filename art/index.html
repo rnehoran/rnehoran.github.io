@@ -1,7 +1,8 @@
 <html>
 	<head>
-	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-	<link rel="icon" href="images/icon.png" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link rel="icon" href="images/icon.png" />
+        <title>Roy's Art Gallery</title>
 		<style>
 			.art_container {
 				-webkit-transition: opacity 2s; /* Safari */
@@ -32,7 +33,7 @@
 				font-family: 'Roboto', sans-serif;
 				color: 2A2824;
 			}
-			.copyright {
+			.center {
     			position: absolute;
     			display: inline;
 				left: 0;
@@ -40,6 +41,11 @@
 				margin-left: auto;
 				margin-right: auto;
 			}
+            #loading {
+                -webkit-transition: opacity 1s; /* Safari */
+				transition: opacity 1s;
+
+            }
 		</style>
 		<script>
 			var LINK = 0;
@@ -64,7 +70,7 @@
 
 			var art_details = [
                 ["0B01yLbkETyknVWxSNm0zTkpXNWM", "Ladybug on Leaf", "January 2017", "Roy Nehoran", "Acrylic on Canvas", 11, 8, 615, 481],
-				["0B01yLbkETyknTWtoeDBWZU5fQjA", "Israeli Coin", "November 2016", "Roy Nehoran", "Acrylic on Canvas", 12, 16, 397, 500],
+				["0B01yLbkETyknTWtoeDBWZU5fQjA", "Old Israeli Coin", "November 2016", "Roy Nehoran", "Acrylic on Canvas", 12, 16, 397, 500],
 				["0B01yLbkETyknNjhTVmRaQ1dORjg", "Flying Eagle", "September 2016", "Roy Nehoran", "Charcoal on Paper", 8.5, 9.5, 615, 352],
 				["0B01yLbkETyknVnZTUWdmRndhTVE", "Roadside", "August 2016", "Roy Nehoran", "Pencil on Paper", 9, 12, 363, 500],
 				["0B01yLbkETyknZW9zd0tSbktZTzQ", "Fresh Fruit", "August 2016", "Roy Nehoran", "Acrylic on Canvas", 12, 9, 615, 447],
@@ -76,6 +82,7 @@
 			var num = art_details.length;
 
             function display(){
+                document.getElementById("loading").style.opacity = 0;
 				x = document.getElementsByClassName("art_container");
 				setTimeout(function(){
 					for (j = 0; j < x.length; j++) {
@@ -96,8 +103,6 @@
 				var valign;
 				var label_halign;
 				var lalign;
-
-				document.body.innerHTML += "<img style='width: 1100px; top:0;' class='copyright' src='images/title.png'>";
 
 				for (var i = 0; i < num; i++) {
 
@@ -195,11 +200,13 @@
 					//alert(vertical);
 					vertical = vertical + gap + (2 * frame_thickness) + image_height;
 				}
-				document.body.innerHTML += "<img onload='display();' style='width: 800px; top:" + (vertical + 40) + "' class='copyright' src='images/copyright.png'>" + 
-											"<a href='mailto:nt2@nehoran.com' style='right:8px; width: 174px; height: 22px; top:" + (vertical + 158) + "' class='copyright'></a>";
+				document.body.innerHTML += "<img onload='display();' style='width: 800px; top:" + (vertical + 40) + "' class='center' src='images/copyright.png'>" +
+											"<a href='mailto:nt2@nehoran.com' style='right:8px; width: 174px; height: 22px; top:" + (vertical + 158) + "' class='center'></a>";
             }
 		</script>
 	</head>
 	<body onload="initArt()" style="background-size: 100%;" background="images/Wood Background.jpg">
+        <img style='width: 1100px; top:0;' class='center' src='images/title.png'>
+        <img id="loading" style="width:400; top:350" class="center" src="images/loading.png">
 	</body>
 </html>
