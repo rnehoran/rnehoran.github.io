@@ -75,7 +75,6 @@
 				["0B01yLbkETyknVnZTUWdmRndhTVE", "Roadside", "August 2016", "Roy Nehoran", "Pencil on Paper", 9, 12, 363, 500],
 				["0B01yLbkETyknZW9zd0tSbktZTzQ", "Fresh Fruit", "August 2016", "Roy Nehoran", "Acrylic on Canvas", 12, 9, 615, 447],
 				["0B01yLbkETyknMUVxWE95a195U2s", "Mountain Path", "July 2016", "Roy Nehoran", "Acrylic on Canvas", 10, 8, 615, 488],
-				["0B01yLbkETyknOXlqTGFzYzN3RVU", "Lakeside Road", "July 2016", "Roy Nehoran", "Acrylic on Canvas", 12, 9, 615, 447],
 				["0B01yLbkETyknU2I4WTV3dTktaDA", "Wildflowers", "July 2016", "Roy Nehoran", "Acrylic on Canvas", 9, 12, 363, 500],
 				["0B01yLbkETyknSndPbk1NODBabFk", "River Delta", "January 2013", "Roy Nehoran", "Acrylic on Canvas", 10, 8, 615, 491],
                 ["0B01yLbkETyknV2N0Qk51aWs3ejQ", "Wintry Beach", "December 2012", "Roy Nehoran", "Acrylic on Canvas", 10, 8, 615, 489],
@@ -159,7 +158,7 @@
 					}
 				    document.body.innerHTML += "<div style='" + halign + valign + "' class='art_container'>" + 
 				    								"<img style='height:" + image_height + "; width:" + image_width + ";' class='artwork' src='https://drive.google.com/uc?id=" + art_details[i][LINK] + "'>" +
-				    								"<table id='frame' width='500' height='500' border='0' cellpadding='0' cellspacing='0'>" + 
+				    								"<table id='frame' border='0' cellpadding='0' cellspacing='0'>" +
 				    									"<tr>" + 
 				    										"<td>" + 
 				    											"<img src='images/frame_tl.png' width='248' height='248' alt=''>" + 
@@ -216,6 +215,6 @@
             }
 		</script>
 	</head>
-	<body onload="initArt()" style="background-size: 100%; background-color: a38665" background="images/background.jpg">
+	<body onload="initArt()" style="overflow-y: scroll; background-size: 100%; background-color: a38665" background="images/background.jpg">
 	</body>
 </html>
