@@ -208,10 +208,20 @@
             }
 
             function show(){
-                var l = $(".art_container").length;
-                for (j = 0; j < l; j++) {
-                    displayArt(j);
-                }
+                var imgs = $('#artcon0 .frame img');
+                var numImg = imgs.length;
+                var countImg = function() {
+                    numImg--;
+                    if (!numImg){
+                        var l = $(".art_container").length;
+                        for (j = 0; j < l; j++) {
+                            displayArt(j);
+                        }
+                    }
+                };
+                imgs.each(function(){
+                    $(this).on('load', countImg);
+                });
             }
 
             function displayArt(n){
