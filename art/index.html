@@ -208,35 +208,41 @@
             }
 
             function show(){
-//                var imgs = $('#artcon0 .frame img');
-//                var numImg = imgs.length;
-//                var countImg = function() {
-//                    numImg--;
-//                    if (!numImg){
+                var imgs = $('#artcon0 .frame img');
+                var numImg = imgs.length;
+                var countImg = function() {
+                    numImg--;
+                    if (!numImg){
                         var l = $(".art_container").length;
                         for (j = 0; j < l; j++) {
                             displayArt(j);
                         }
-//                    }
-//                };
-//                imgs.each(function(){
-//                    $(this).on('load', countImg);
-//                });
+                    }
+                };
+                imgs.each(function(){
+                    $(this).on('load', countImg);
+                });
             }
 
             function displayArt(n){
-                $("#artcon" + n + " .artwork").on('load', function () {
-                    if (n == 0){
+                var isLoaded = document.getElementsByClassName("artwork")[n].complete;
+                if (isLoaded) showArt(n);
+                else {
+                    $("#artcon" + n + " .artwork").on('load', function () {
+                        showArt(n);
+                    });
+                }
+            }
+
+            function showArt(m){
+                    if (m == 0){
                         document.getElementById("loading").style.opacity = 0;
                         setTimeout(function(){
                             $("#artcon" + 0).css("opacity", 1);
                         }, 500);
                         return;
                     }
-                    $("#artcon" + n).css("opacity", 1);
-
-                });
-
+                    $("#artcon" + m).css("opacity", 1);
             }
 		</script>
 	</head>
