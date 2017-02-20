@@ -44,6 +44,10 @@
                 -webkit-transition: opacity 1s; /* Safari */
 				transition: opacity 1s;
             }
+            #back_color {
+                -webkit-transition: opacity 0.5s; /* Safari */
+				transition: opacity 0.5s;
+            }
 
 		</style>
 		<script>
@@ -83,6 +87,18 @@
 
             function displayID(id){
                 document.getElementById(id).style.opacity = 1;
+            }
+
+            function start(){
+                var backgroundSrc = new Image;
+                backgroundSrc.src = "images/background.jpg";
+                backgroundSrc.onload = function(){
+                    $("body").css("background-image", "url(images/background.jpg)");
+                    document.getElementById("back_color").style.opacity = 0;
+                    setTimeout(function(){
+                        initArt();
+                    }, 500);
+                }
             }
 
 			function initArt(){
@@ -246,6 +262,7 @@
             }
 		</script>
 	</head>
-	<body onload="initArt();" style="overflow-y: scroll; background-size: 100%; background-color: a38665" background="images/background.jpg">
+	<body onload="start();" style="overflow-y: scroll; margin: 0; background-size: 100%; background-color: a38665">
+        <div id="back_color" style="opacity:1; width: 100%; height: 100%;  background-size: 100%; background-color: a38665"></div>
 	</body>
 </html>
