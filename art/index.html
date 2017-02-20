@@ -225,7 +225,7 @@
             }
 
             function displayArt(n){
-                $("#artcon" + n + " > .artwork").on('load', function () {
+                $("#artcon" + n + " .artwork").on('load', function () {
                     if (n == 0){
                         document.getElementById("loading").style.opacity = 0;
                         setTimeout(function(){
