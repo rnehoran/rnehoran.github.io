@@ -113,14 +113,14 @@
 				var valign;
 				var label_halign;
 				var lalign;
-                var title_width = 1100;
+                var title_width = "1100px";
 
-                if (screen.width < title_width){
-                    title_width = screen.width;
+                if (screen.width < 1100){
+                    title_width = "100%";
                 }
 
                 document.body.innerHTML += "<img id='loading' onload='displayID(\"loading\")' style='width:400; top:350' class='center' src='images/loading.png'>";
-                document.body.innerHTML += "<img id='title' onload='displayID(\"title\")' style='width: " + title_width + "px; top:0;' class='center' src='images/title.png'>";
+                document.body.innerHTML += "<img id='title' onload='displayID(\"title\")' style='width: " + title_width + "; top:0;' class='center' src='images/title.png'>";
 
 				for (var i = 0; i < num; i++) {
 
