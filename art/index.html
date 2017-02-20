@@ -1,5 +1,6 @@
 <html>
 	<head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <link rel="icon" href="images/icon.png" />
         <title>Roy's Art Gallery</title>
@@ -13,13 +14,10 @@
 			}
 			img.artwork {
 			}
-			#frame {
+			.frame {
 				position: absolute;
 				bottom: -125px;
 				left: -108px;
-			}
-			.frame {
-				height: 300px;
 			}
 			.label {
 				position: absolute;
@@ -46,6 +44,7 @@
                 -webkit-transition: opacity 1s; /* Safari */
 				transition: opacity 1s;
             }
+
 		</style>
 		<script>
 			var LINK = 0;
@@ -82,25 +81,13 @@
             ];
 			var num = art_details.length;
 
-            function display(){
-				setTimeout(function(){
-                    document.getElementById("loading").style.opacity = 0;
-                    x = document.getElementsByClassName("art_container");
-                    setTimeout(function(){
-                        for (j = 0; j < x.length; j++) {
-                            x[j].style.opacity = 1;
-                        }
-                    }, 500);
-				}, 1000);
-			}
-
             function displayID(id){
                 document.getElementById(id).style.opacity = 1;
             }
 
 			function initArt(){
 
-				var vertical = 250;
+				var vertical = 250;//((screen.width * 0.8) * 0.2); //250;
 				var image_width;
 			    var image_height;
 			    var ext_width;
@@ -156,9 +143,9 @@
 					    halign = "right: 170; ";
 						label_halign = "right: " + lalign + "; ";
 					}
-				    document.body.innerHTML += "<div style='" + halign + valign + "' class='art_container'>" + 
+				    document.body.innerHTML += "<div style='" + halign + valign + "' class='art_container' id='artcon" + i + "'>" +
 				    								"<img style='height:" + image_height + "; width:" + image_width + ";' class='artwork' src='https://drive.google.com/uc?id=" + art_details[i][LINK] + "'>" +
-				    								"<table id='frame' border='0' cellpadding='0' cellspacing='0'>" +
+				    								"<table class='frame' border='0' cellpadding='0' cellspacing='0'>" +
 				    									"<tr>" + 
 				    										"<td>" + 
 				    											"<img src='images/frame_tl.png' width='248' height='248' alt=''>" + 
@@ -209,12 +196,40 @@
 				    //alert(image_height);
 					//alert(vertical);
 					vertical = vertical + gap + (2 * frame_thickness) + image_height;
+                    if (i == num-1){
+                        show();
+                    }
 				}
-				document.body.innerHTML += "<img id='copyright' onload='displayID(\"copyright\"); display();' style='width: 800px; top:" + (vertical + 40) + "' class='center' src='images/copyright.png'>" +
+				document.body.innerHTML += "<img id='copyright' onload='displayID(\"copyright\");' style='width: 800px; top:" + (vertical + 40) + "' class='center' src='images/copyright.png'>" +
 											"<a href='mailto:nt2@nehoran.com' style='right:8px; width: 174px; height: 22px; top:" + (vertical + 158) + "' class='center'></a>";
+//                $( window ).on( "load", function() {
+//                    display();
+//                });
+            }
+
+            function show(){
+                var l = $(".art_container").length;
+                for (j = 0; j < l; j++) {
+                    displayArt(j);
+                }
+            }
+
+            function displayArt(n){
+                $("#artcon" + n + " > .artwork").on('load', function () {
+                    if (n == 0){
+                        document.getElementById("loading").style.opacity = 0;
+                        setTimeout(function(){
+                            $("#artcon" + 0).css("opacity", 1);
+                        }, 500);
+                        return;
+                    }
+                    $("#artcon" + n).css("opacity", 1);
+
+                });
+
             }
 		</script>
 	</head>
-	<body onload="initArt()" style="overflow-y: scroll; background-size: 100%; background-color: a38665" background="images/background.jpg">
+	<body onload="initArt();" style="overflow-y: scroll; background-size: 100%; background-color: a38665" background="images/background.jpg">
 	</body>
 </html>
