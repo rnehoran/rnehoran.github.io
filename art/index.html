@@ -12,6 +12,16 @@
     			position: absolute;
     			display: inline;
 			}
+			.dot_container {
+    			position: absolute;
+    			display: inline;
+			}
+			.dot{
+    			position: absolute;
+    			bottom: 0;
+    			width: 100px;
+    			height: 100px;
+			}
 			img.artwork {
 			}
 			.frame {
@@ -71,20 +81,49 @@
 
 			var n = 0;
 
-			var art_details = [
-                ["0B01yLbkETyknN0hRVnFxQTlxazA", "Golden Calf", "March 2017", "Roy Nehoran", "Acrylic on Canvas", 9, 12, 353, 500],
-                ["0B01yLbkETyknVWxSNm0zTkpXNWM", "Ladybug on Leaf", "January 2017", "Roy Nehoran", "Acrylic on Canvas", 11, 8, 615, 481],
-				["0B01yLbkETyknTWtoeDBWZU5fQjA", "Old Israeli Coin", "November 2016", "Roy Nehoran", "Acrylic on Canvas", 12, 16, 397, 500],
-				["0B01yLbkETyknNjhTVmRaQ1dORjg", "Flying Eagle", "September 2016", "Roy Nehoran", "Charcoal on Paper", 8.5, 9.5, 615, 429],
-				["0B01yLbkETyknVnZTUWdmRndhTVE", "Roadside", "August 2016", "Roy Nehoran", "Pencil on Paper", 9, 12, 363, 500],
-				["0B01yLbkETyknZW9zd0tSbktZTzQ", "Fresh Fruit", "August 2016", "Roy Nehoran", "Acrylic on Canvas", 12, 9, 615, 447],
-				["0B01yLbkETyknMUVxWE95a195U2s", "Mountain Path", "July 2016", "Roy Nehoran", "Acrylic on Canvas", 10, 8, 615, 485],
-				["0B01yLbkETyknU2I4WTV3dTktaDA", "Wildflowers", "July 2016", "Roy Nehoran", "Acrylic on Canvas", 9, 12, 363, 500],
-				["0B01yLbkETyknSndPbk1NODBabFk", "River Delta", "January 2013", "Roy Nehoran", "Acrylic on Canvas", 10, 8, 615, 491],
-                ["0B01yLbkETyknV2N0Qk51aWs3ejQ", "Wintry Beach", "December 2012", "Roy Nehoran", "Acrylic on Canvas", 10, 8, 615, 489],
-				["0B01yLbkETyknT1ZPRmVFa3ZCNnM", "Surf of the Storm", "December 2012", "Roy Nehoran", "Acrylic on Canvas", 10, 8, 615, 483]
-            ];
-			var num = art_details.length;
+			var numLoaded = 0;
+			var stopLoading = false;
+
+			dataFileID = "1w-0A9tRDHwHIBffnf5gKdiWW2dvz0Wm9nCc3ZPTZpmQ";
+
+			var art_details = [];
+    //             ["0B01yLbkETyknN0hRVnFxQTlxazA", "Golden Calf", "March 2017", "Roy Nehoran", "Acrylic on Canvas", 9, 12, 353, 500],
+    //             ["0B01yLbkETyknVWxSNm0zTkpXNWM", "Ladybug on Leaf", "January 2017", "Roy Nehoran", "Acrylic on Canvas", 11, 8, 615, 481],
+				// ["0B01yLbkETyknTWtoeDBWZU5fQjA", "Old Israeli Coin", "November 2016", "Roy Nehoran", "Acrylic on Canvas", 12, 16, 397, 500],
+				// ["0B01yLbkETyknNjhTVmRaQ1dORjg", "Flying Eagle", "September 2016", "Roy Nehoran", "Charcoal on Paper", 8.5, 9.5, 615, 429],
+				// ["0B01yLbkETyknVnZTUWdmRndhTVE", "Roadside", "August 2016", "Roy Nehoran", "Pencil on Paper", 9, 12, 363, 500],
+				// ["0B01yLbkETyknZW9zd0tSbktZTzQ", "Fresh Fruit", "August 2016", "Roy Nehoran", "Acrylic on Canvas", 12, 9, 615, 447],
+				// ["0B01yLbkETyknMUVxWE95a195U2s", "Mountain Path", "July 2016", "Roy Nehoran", "Acrylic on Canvas", 10, 8, 615, 485],
+				// ["0B01yLbkETyknU2I4WTV3dTktaDA", "Wildflowers", "July 2016", "Roy Nehoran", "Acrylic on Canvas", 9, 12, 363, 500],
+				// ["0B01yLbkETyknSndPbk1NODBabFk", "River Delta", "January 2013", "Roy Nehoran", "Acrylic on Canvas", 10, 8, 615, 491],
+    //             ["0B01yLbkETyknV2N0Qk51aWs3ejQ", "Wintry Beach", "December 2012", "Roy Nehoran", "Acrylic on Canvas", 10, 8, 615, 489],
+				// ["0B01yLbkETyknT1ZPRmVFa3ZCNnM", "Surf of the Storm", "December 2012", "Roy Nehoran", "Acrylic on Canvas", 10, 8, 615, 483]
+    //         ];
+			var num;
+
+            function loading(){
+            	var sep = 100;
+            	if (stopLoading) return;
+                $(".dot1").animate({top: '-=50'});
+                setTimeout(function() {
+                	$(".dot2").animate({top: '-=50'});
+	                setTimeout(function() {
+	                	$(".dot3").animate({top: '-=50'});
+	                }, sep);
+                }, sep);
+                setTimeout(function() {
+                	$(".dot1").animate({top: '+=50'});
+	                setTimeout(function() {
+	                	$(".dot2").animate({top: '+=50'});
+		                setTimeout(function() {
+		                	$(".dot3").animate({top: '+=50'});
+		                }, sep);
+	                }, sep);
+                }, 400);
+                setTimeout(function() {
+                	loading();
+                }, 900);
+            }
 
             function displayID(id){
                 document.getElementById(id).style.opacity = 1;
@@ -96,9 +135,13 @@
                 backgroundSrc.onload = function(){
                     $("body").css("background-image", "url(images/background.jpg)");
                     document.getElementById("back_color").style.opacity = 0;
-                    setTimeout(function(){
+                    // setTimeout(function(){
+			        jQuery.get("https://docs.google.com/feeds/download/documents/export/Export?id=" + dataFileID + "&exportFormat=txt", function(data){
+			        	art_details = eval(data);
+			        	num = art_details.length;
                         initArt();
-                    }, 500);
+                    })
+                    // }, 500);
                 }
             }
 
@@ -110,20 +153,24 @@
 			    var ext_width;
 			    var ext_height;
 			    var hw_ratio;
+			    var dalign;
 				var halign;
 				var valign;
 				var label_halign;
 				var lalign;
                 var title_width = "1100px";
+                var load  = "";
 
                 if (screen.width < 1100){
                     title_width = "100%";
                 }
 
-                document.body.innerHTML += "<img id='loading' onload='displayID(\"loading\")' style='width:400; top:350' class='center' src='images/loading.png'>";
+                // document.body.innerHTML += "<img id='loading' onload='displayID(\"loading\")' style='width:400; top:350' class='center' src='images/loading.png'>";
                 document.body.innerHTML += "<img id='title' onload='displayID(\"title\")' style='width: " + title_width + "; top:0;' class='center' src='images/title.png'>";
 
 				for (var i = 0; i < num; i++) {
+
+					if (i == 0) load = "";// onload='loading();'";
 
 					// alert(k);
 				    image_width = art_details[i][IMGW];
@@ -153,19 +200,29 @@
 					ext_height = image_height - 243;
 
 					lalign = 110 + image_width;
-					valign = "top: " + (vertical + gap + frame_thickness) + "; ";
+					valign_num = (vertical + gap + frame_thickness);
+					valign = "top: " + valign_num + "; ";
 					//alert(frame_thickness);
 					//alert(valign);
 					if ((i % 2) == 0){
+						dalign = "left: ";
 						halign = "left: 150; ";
 						label_halign = "left: " + lalign + "; ";							
 					}
 					else {
+						dalign = "right: "
 						lalign -= 10;
 					    halign = "right: 170; ";
 						label_halign = "right: " + lalign + "; ";
 					}
-				    document.body.innerHTML += "<div style='" + halign + valign + "' class='art_container' id='artcon" + i + "'>" +
+				    document.body.innerHTML +=  "<div style='" + halign + "top: " + (valign_num + (image_height/2) - 50) + "; height: 150; width:" + image_width + "' class='dot_container' id='dotcon" + i + "'>" +
+				    								"<div style='margin: 0 auto; height:150; width: 240; position: relative'>" +
+					    								"<img" + load + " src='images/dot.png' class='dot dot1' style='" + dalign + "-10'/>" +
+					    								"<img src='images/dot.png' class='dot dot2' style='" + dalign + "70'/>" +
+					    								"<img src='images/dot.png' class='dot dot3' style='" + dalign + "150'/>" +
+				    								"</div>" +
+			    								"</div>" +
+				    							"<div style='" + halign + valign + "' class='art_container' id='artcon" + i + "'>" +
 				    								"<img style='height:" + image_height + "; width:" + image_width + ";' class='artwork' src='https://drive.google.com/uc?id=" + art_details[i][LINK] + "'>" +
 				    								"<table class='frame' border='0' cellpadding='0' cellspacing='0'>" +
 				    									"<tr>" + 
@@ -218,7 +275,13 @@
 				    //alert(image_height);
 					//alert(vertical);
 					vertical = vertical + gap + (2 * frame_thickness) + image_height;
+                    load = "";
                     if (i == num-1){
+		                var loadSrc = new Image;
+		                loadSrc.src = "images/dot.png";
+		                loadSrc.onload = function(){
+	                        loading();
+		                }
                         show();
                     }
 				}
@@ -257,14 +320,19 @@
             }
 
             function showArt(m){
-                    if (m == 0){
-                        document.getElementById("loading").style.opacity = 0;
-                        setTimeout(function(){
-                            $("#artcon" + 0).css("opacity", 1);
-                        }, 500);
-                        return;
-                    }
-                    $("#artcon" + m).css("opacity", 1);
+                /*if (m == 0){
+                    // document.getElementById("loading").style.opacity = 0;
+                    setTimeout(function(){
+                        $("#artcon" + 0).css("opacity", 1);
+                    }, 500);
+                    return;
+                }*/
+                $("#dotcon" + m).animate({"opacity": 0});
+                setTimeout(function(){
+	                $("#artcon" + m).css("opacity", 1);
+	            }, 100);
+	            numLoaded++;
+	            if (numLoaded == num) stopLoading = true;
             }
 		</script>
 	</head>
