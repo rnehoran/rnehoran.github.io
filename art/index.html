@@ -40,7 +40,7 @@
 				background-image:url(images/label.png);
 				background-size: 100% 100%;
 				font-family: 'Roboto', sans-serif;
-				color: 2A2824;
+				color: 000000;/*2A2824;*/
 			}
 			.center {
     			position: absolute;
@@ -84,6 +84,8 @@
 
 			var numLoaded = 0;
 			var stopLoading = false;
+
+            var labelTextOpacity = 0.55;
 
 			dataFileID = "1w-0A9tRDHwHIBffnf5gKdiWW2dvz0Wm9nCc3ZPTZpmQ";
 
@@ -259,18 +261,20 @@
 														"</tr>" + 
 													"</table>" + 
 													"<div  class='label' style='" + label_halign + "'>" + 
-														"<b style='line-height: 1.5; font-size: 18;'>" + 
-															art_details[i][TITL] + 
-														"</b>" + 
-														"<br>" + 
-														art_details[i][DATE] + 
-														"<br>" + 
-														"<p style='font-size: 12;'>" + 
-															art_details[i][NAME] + 
-															"<br>" + 
-															art_details[i][DESC] + " " + art_details[i][CNVH] + "\"x" + art_details[i][CNVW] + "\"" + 
-															"<br>" + 
-														"</p>" + 
+                                                        "<span style='opacity: " + labelTextOpacity + "'>" +
+                                                            "<b style='line-height: 1.5; font-size: 18;'>" +
+                                                                art_details[i][TITL] +
+                                                            "</b>" +
+                                                            "<br style='opacity: " + (labelTextOpacity + 0.1) + "'>" +
+                                                                art_details[i][DATE] +
+                                                            "<br>" +
+                                                            "<p style='opacity: " + (labelTextOpacity + 0.1) + "; font-size: 12;'>" +
+                                                                art_details[i][NAME] +
+                                                                "<br>" +
+                                                                art_details[i][DESC] + " " + art_details[i][CNVH] + "\"x" + art_details[i][CNVW] + "\"" +
+                                                                "<br>" +
+                                                            "</p>" +
+                                                        "</span>" +
 													"</div>" + 
 												"</div>";
 				    //alert(image_height);
