@@ -278,6 +278,18 @@
 					vertical = vertical + gap + (2 * frame_thickness) + image_height;
                     load = "";
                     if (i == num-1){
+                        var ua = window.navigator.userAgent;
+                        if (ua.indexOf("MSIE ") > 0 || ua.indexOf('Trident/') > 0){
+                            setTimeout(function() {
+                                var l = $(".art_container").length;
+                                for (j = 0; j < l; j++) {
+                                    showArt(j);
+                                }
+                            }, 5000);
+                        }
+//                        $(window).on("load", function() {
+//                            /*if (!stopLoading)*/ $(".art_container").css("opacity", 1);
+//                        });
 		                var loadSrc = new Image;
 		                loadSrc.src = "images/dot.png";
 		                loadSrc.onload = function(){
