@@ -13,6 +13,7 @@
     			display: inline;
 			}
 			.dot_container {
+                opacity: 0;
     			position: absolute;
     			display: inline;
 			}
@@ -280,6 +281,7 @@
 		                var loadSrc = new Image;
 		                loadSrc.src = "images/dot.png";
 		                loadSrc.onload = function(){
+                            $(".dot_container").animate({"opacity": 1});
 	                        loading();
 		                }
                         show();
