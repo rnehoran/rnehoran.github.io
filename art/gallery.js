@@ -215,7 +215,7 @@ function initArt(){
         }
     }
     document.body.innerHTML += "<img id='copyright' onload='displayID(\"copyright\");' style='width: 800px; top:" + (vertical + 40) + "' class='center' src='images/copyright.png'>" +
-                                "<a href='mailto:nt2@nehoran.com' style='right:8px; width: 174px; height: 22px; top:" + (vertical + 158) + "' class='center'></a>";
+                                "<a href='mailto:roynehoran-art@yahoo.com?Subject=Art%20Gallery' style='right:8px; width: 174px; height: 22px; top:" + (vertical + 158) + "' class='center'></a>";
 }
 
 function show(){
