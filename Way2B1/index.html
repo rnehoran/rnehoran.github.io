@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html style="display: block;">
+	<head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Proza+Libre:500" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Patua+One" rel="stylesheet">
+		<title>
+			Way2B1 GitHub User Finder
+		</title>
+		<style type="text/css">
+			body {
+			    margin: 0;
+			    background-size: 100%;
+			    background-image: url(back.jpg);
+			    background-attachment: fixed;
+			    display: block;
+			}
+			#main {
+				margin: 3em;
+				padding: 2em;
+				background: rgba(17, 70, 24, 0.78);
+				border-radius: 10px;
+				color: #e0ffe1;
+			}
+			#username {
+				background: rgba(17, 70, 24, 0.78);
+				border-style: solid;
+				border-color: rgba(64, 111, 70, 0.78);
+				border-radius: 5px;
+				padding: 10px;
+				color: #e0ffe1;
+			}
+			#submit {
+				background: rgba(80, 136, 87, 0.63);
+				border-style: none;
+				border-radius: 5px;
+				padding: 10px;
+				color: #e0ffe1;
+				cursor:pointer;
+				text-decoration: none;
+			}
+			#title {
+				font-family: 'Patua One', cursive;
+				font-size: 45px;
+			}
+			#output {
+				font-family: 'Proza Libre', sans-serif;
+			}
+			#avatar {
+				width: 150px;
+				height: 150px;
+				border-radius: 75px;
+			}
+		</style>
+        <script src="index.js"></script>
+	</head>
+	<body onkeypress="keyPress(event);">
+		<table width="100%">
+			<tr style="width: 100%">
+				<td style="width: 25%"></td>
+				<td style="width: 50%">
+					<div id="main">
+						<div align="center">
+							Way2B1 <br>
+							<span id="title">
+								GitHub User Finder
+							</span>
+							<br><br>
+							<input id="username" type="text" name="username" placeholder="username">
+							<span onclick="search()" id="submit">Go!</span>
+						</div>
+						<div id="output">
+						</div>
+					</div>
+				</td>
+				<td style="width: 25%"></td>
+			</tr>
+		</table>
+	</body>
+</html>
