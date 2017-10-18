@@ -60,8 +60,8 @@ function compare() {
 	var username = document.getElementById("username").value;
 	var lastUsername = $("#last_username").html();
 	var data;
-	var avatarSRC;
-	var avatarSRC2;
+	var avatarSRC = "//:0";
+	var avatarSRC2 = "//:0";
 	var repoURL = "https://api.github.com/users/" + username + "/repos";
 	var repoURL2 = "https://api.github.com/users/" + lastUsername + "/repos";
 
@@ -77,14 +77,8 @@ function compare() {
 	// get avatars from repos page
 	$("#last_username").html(username);
     $.get(repoURL, function(data) {
-    	if(data[0] == undefined){
-    		error(username, NO_REPOS);
-    	}
         avatarSRC = data[0].owner.avatar_url;
 	    $.get(repoURL2, function(data2) {
-	    	if(data2[0] == undefined){
-	    		error(lastUsername, NO_REPOS);
-	    	}
 	        avatarSRC2 = data2[0].owner.avatar_url;
 	    }).fail(function() {
 	    	error(lastUsername, USER_NOT_FOUND);
