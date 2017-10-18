@@ -51,6 +51,12 @@
 				height: 150px;
 				border-radius: 75px;
 			}
+			.compare {
+				display: none;
+			}
+			.message {
+				font-size: 12px;
+			}
 		</style>
         <script src="index.js"></script>
 	</head>
@@ -65,11 +71,14 @@
 							<span id="title">
 								GitHub User Finder
 							</span>
+							<br>
+							<span class="message">Enter a username below and press enter or search to find the user's avatar and repositories. </span>
+							<span class="compare message"><br>Now, enter another username and press compare to find out who follows both users.</span>
 							<br><br>
 							<input id="username" type="text" name="username" placeholder="username">
 							<span onclick="search()" class="submit">Search</span>
-							<span onclick="compare()" class="submit" id="compare" style="visibility: hidden;">Compare</span>
-							<span id="last_username" style="visibility: hidden;"></span>
+							<span onclick="compare()" class="submit compare">Compare</span>
+							<span id="last_username" style="display: none;"></span>
 						</div>
 						<div id="output">
 						</div>

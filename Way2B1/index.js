@@ -39,7 +39,7 @@ function search() {
 	    document.getElementById("output").innerHTML = output;
 		$("#last_username").html(username);
 	    if ($("#last_username").html() != "") {
-	    	$("#compare").css("visibility", "visible");
+	    	$(".compare").css("display", "inline");
 	    }
     }).fail(function() {
     	error(username, USER_NOT_FOUND);
@@ -162,7 +162,7 @@ function inCommon(data, data2, username, lastUsername, avatarSRC, avatarSRC2) {
  ********************************/
 function error(username, err) {
 	$("#last_username").html("");
-	$("#compare").css("visibility", "hidden");
+	$(".compare").css("display", "none");
 	if(err == NO_REPOS) {
 		document.getElementById("output").innerHTML = "<br>user <b>" + username + "</b> has no public repositories on GitHub";
 	}
