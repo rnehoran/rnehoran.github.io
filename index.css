@@ -1,0 +1,36 @@
+html {
+	height: 100%;
+}
+body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+}
+.bg {
+    margin: 0;
+    background-size: cover;
+    background-image: url(images/altamont.jpg);
+    background-attachment: fixed;
+    display: block;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: -1;
+}
+.maintext {
+	color: white;
+	font-size: 8rem;
+	-webkit-text-shadow: 0px 0px 15px rgba(83,134,196,1);
+	-moz-text-shadow: 0px 0px 15px rgba(83,134,196,1);
+	text-shadow: 0px 0px 15px rgba(83,134,196,1);
+}
+.pane {
+	height: 50%;
+	display: flex;
+	align-items: center;
+	padding-left: 10%;
+}
+#bg2 {
+	top: 100%;
+    background-image: url(images/perito_moreno.jpg);
+}
