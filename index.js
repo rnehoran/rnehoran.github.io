@@ -1,11 +1,24 @@
 const MOVING = false;
 const READY = true;
 var state = READY;
+
 const DOWN = true;
 const UP = false;
 
+const animLen = 1000;
+
 function onload() {
-	$(document).keypress(e => {
+	const upKeys = ['ArrowUp', 'ArrowLeft', 'a', 'w', 'j', 'i', 'PageUp'];
+	const downKeys = ['ArrowDown', 'ArrowRight', 's', 'd', 'k', 'l', 'PageDown', ' ', 'Enter', 'Tab']
+	$(document).keydown(e => {
+		if (upKeys.includes(e.key)) {
+			go(UP)
+			return;
+		}
+		if (downKeys.includes(e.key)) {
+			go()
+			return;
+		}
 	});
 	$(document).bind('mousewheel', e => {
 		if (e.originalEvent.wheelDelta < 0) {
@@ -23,19 +36,31 @@ function go(dir = DOWN) {
 	state = MOVING;
 	if (dir === DOWN) {
 		console.log("go(): is going DOWN");
-	} else if (dir === UP) {
-		console.log("go(): is going UP");
-	} else {
-		console.error("go(dir): dir must be either DOWN or UP");
+		$("#bg2").animate({
+			top: "0%"
+		}, animLen, function() {
+			state = READY;
+		});
+		$("#bg1").animate({
+			top: "-100%"
+		}, animLen, function() {
+			state = READY;
+		});
+		return
 	}
-	$("#bg2").animate({
-		top: "0%"
-	}, 1000, function() {
-		state = READY;
-	});
-	$("#bg1").animate({
-		top: "-100%"
-	}, 1000, function() {
-		state = READY;
-	});
+	if (dir === UP) {
+		console.log("go(): is going UP");
+		$("#bg2").animate({
+			top: "100%"
+		}, animLen, function() {
+			state = READY;
+		});
+		$("#bg1").animate({
+			top: "0%"
+		}, animLen, function() {
+			state = READY;
+		});
+		return;
+	}
+	console.error("go(dir): dir must be either DOWN or UP");
 }
