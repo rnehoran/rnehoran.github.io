@@ -26,9 +26,14 @@ body {
 .maintext {
 	color: white;
 	font-size: 8vw;
-	-webkit-text-shadow: 0px 0px 15px rgba(83,134,196,1);
-	-moz-text-shadow: 0px 0px 15px rgba(83,134,196,1);
-	text-shadow: 0px 0px 15px rgba(83,134,196,1);
+	-webkit-text-shadow: 0px 0px 15px #5386c4;
+	-moz-text-shadow: 0px 0px 15px #5386c4;
+	text-shadow: 0px 0px 15px #5386c4;
+    -webkit-transition: text-shadow 1s;
+    -moz-transition: text-shadow 1s;
+    -ms-transition: text-shadow 1s;
+    -o-transition: text-shadow 1s;
+    transition: text-shadow 1s;
 }
 .pane {
 	height: 50%;
@@ -44,45 +49,80 @@ body {
 #templates {
 	display: none;
 }
-button.navbtn:hover{
+.navbtn {
+	z-index: 2;
+}
+button.navbtn:hover, button.navbtn.hover {
 	background-color: rgba(255, 255, 255, 0.5);
 	color: rgba(255, 255, 255, 1);
-	border: 1px solid rgba(255, 255, 255, 1);
-}
+/*	border: 1px solid rgba(255, 255, 255, 1);
+*/}
 button.navbtn {
 	background-color: rgba(255, 255, 255, 0);
 	color: rgba(255, 255, 255, 0.75);
-	border: 1px solid rgba(255, 255, 255, 0.75);
-	border-radius: 50%;
+	font-size: 1.25rem;
+/*	border: 1px solid rgba(255, 255, 255, 0.75);
+*/	border-radius: 50%;
 	width: 50px;
 	height: 50px;
 	position: absolute;
 }
 button.navbtn.down {
-	bottom: 2%;
+	bottom: 10px;
 	left: 50%;
 	margin-left: -25px;
 }
 button.navbtn.up {
-	top: 2%;
+	top: 10px;
 	left: 50%;
 	margin-left: -25px;
-	transform: rotate(180deg)
+	transform: rotate(180deg);
 }
 button.navbtn.left {
-	left: 2%;
+	left: 10px;
 	top: 50%;
 	margin-top: -25px;
-	transform: rotate(90deg)
+	transform: rotate(90deg);
 }
 button.navbtn.right {
-	right: 2%;
+	right: 10px;
 	top: 50%;
 	margin-top: -25px;
-	transform: rotate(270deg)
+	transform: rotate(270deg);
 }
-span.navbtn {
-	color: white;
-	opacity: 1;
-	font-size: 1.25rem;
+div.navbtn.down {
+	width: 80%;
+    bottom: 0;
+    left: 10%;
+    position: absolute;
+    height: 75px;
+    cursor: pointer;
+}
+div.navbtn.up {
+	width: 80%;
+    top: 0;
+    left: 10%;
+    position: absolute;
+    height: 75px;
+    cursor: pointer;
+}
+div.navbtn.left {
+	height: 80%;
+    left: 0;
+    top: 10%;
+    position: absolute;
+    width: 75px;
+    cursor: pointer;
+}
+div.navbtn.right {
+	height: 80%;
+    right: 0;
+    top: 10%;
+    position: absolute;
+    width: 75px;
+    cursor: pointer;
+}
+.navbtn.up {
+	display: none;
+	opacity: 0;
 }
