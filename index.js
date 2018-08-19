@@ -73,7 +73,7 @@ function onload() {
 		}
 	});
 	$(".navbtn").click(e => {
-		go(RIGHT);
+		go(LEFT);
 	});
 }
 
@@ -85,17 +85,18 @@ function go(dir = DOWN, toPage = -1) {
 	switch(dir) {
 		case LEFT:
 			$("#page" + curPage).find(".bg" + pages[curPage].cursrc).animate({
-				left: "-100%"
-			}, animLen, function() {
-				$(this).css({
-					"left": "100%"
-				});
-				state = READY;
+				left: "100%"
+			}, animLen, function() {});
+			pages[curPage].cursrc = (((pages[curPage].cursrc - 1) % pages[curPage].src.length) + pages[curPage].src.length) % pages[curPage].src.length;
+			console.log(pages[curPage].cursrc);
+			$("#page" + curPage).find(".bg" + pages[curPage].cursrc).css({
+				"left": "-100%"
 			});
-			pages[curPage].cursrc = (pages[curPage].cursrc + 1) % pages[curPage].src.length;
 			$("#page" + curPage).find(".bg" + pages[curPage].cursrc).animate({
 				left: "0%"
-			}, animLen, function() {});
+			}, animLen, function() {
+				state = READY;
+			});
 			return;
 		case RIGHT:
 			$("#page" + curPage).find(".bg" + pages[curPage].cursrc).animate({
