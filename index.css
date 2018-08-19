@@ -6,20 +6,23 @@ body {
     height: 100%;
     overflow: hidden;
 }
-.bg {
+.page, .bg {
     margin: 0;
     background-size: cover;
-    background-image: url(images/altamont.jpg);
     background-attachment: fixed;
+    background-position: bottom;
     display: block;
     height: 100%;
     width: 100%;
     position: absolute;
     z-index: -1;
 }
+.bg2 {
+	left: 100%;
+}
 .maintext {
 	color: white;
-	font-size: 8rem;
+	font-size: 8vw;
 	-webkit-text-shadow: 0px 0px 15px rgba(83,134,196,1);
 	-moz-text-shadow: 0px 0px 15px rgba(83,134,196,1);
 	text-shadow: 0px 0px 15px rgba(83,134,196,1);
@@ -29,8 +32,31 @@ body {
 	display: flex;
 	align-items: center;
 	padding-left: 10%;
+	padding-right: 10%;
+	overflow: hidden;
 }
-#bg2 {
-	top: 100%;
-    background-image: url(images/perito_moreno.jpg);
+.page.static {
+	z-index: 1;
+}
+#templates {
+	display: none;
+}
+button.navbtn:hover{
+	background-color: rgba(255, 255, 255, 0.5);
+	color: rgba(255, 255, 255, 1);
+	border: 1px solid rgba(255, 255, 255, 1);
+}
+button.navbtn {
+	background-color: rgba(255, 255, 255, 0);
+	color: rgba(255, 255, 255, 0.75);
+	border: 1px solid rgba(255, 255, 255, 0.75);
+	border-radius: 50%;
+	width: 50px;
+	height: 50px;
+	margin: 5%;
+}
+span.navbtn {
+	color: white;
+	opacity: 1;
+	font-size: 1.25rem;
 }
