@@ -43,15 +43,25 @@ function onload() {
 	$(".statictext").text(statictext)
 
 	// movement
-	const upKeys = ['ArrowUp', 'ArrowLeft', 'a', 'w', 'j', 'i', 'PageUp'];
-	const downKeys = ['ArrowDown', 'ArrowRight', 's', 'd', 'k', 'l', 'PageDown', ' ', 'Enter', 'Tab']
+	const upKeys = ['ArrowUp', 'w', 'i', 'PageUp'];
+	const downKeys = ['ArrowDown', 's', 'k', 'PageDown', ' ', 'Enter', 'Tab'];
+	const leftKeys = ['ArrowLeft', 'a', 'j', 'Home'];
+	const rightKeys = ['ArrowRight', 'd', 'l', 'End'];
 	$(document).keydown(e => {
 		if (upKeys.includes(e.key)) {
-			go(UP)
+			go(UP);
 			return;
 		}
 		if (downKeys.includes(e.key)) {
-			go()
+			go();
+			return;
+		}
+		if (leftKeys.includes(e.key)) {
+			go(LEFT);
+			return;
+		}
+		if (rightKeys.includes(e.key)) {
+			go(RIGHT);
 			return;
 		}
 	});
@@ -70,7 +80,15 @@ function onload() {
 		}
 	});
 	$(".navbtn").click(e => {
-		go(LEFT);
+		if ($(e.target).hasClass("left")) {
+			go(LEFT);
+		} else if ($(e.target).hasClass("right")) {
+			go(RIGHT);
+		} else if ($(e.target).hasClass("up")) {
+			go(UP);
+		} else if ($(e.target).hasClass("down")) {
+			go(DOWN);
+		}
 	});
 }
 

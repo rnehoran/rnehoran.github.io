@@ -56,7 +56,30 @@ button.navbtn {
 	border-radius: 50%;
 	width: 50px;
 	height: 50px;
-	margin: 5%;
+	position: absolute;
+}
+button.navbtn.down {
+	bottom: 2%;
+	left: 50%;
+	margin-left: -25px;
+}
+button.navbtn.up {
+	top: 2%;
+	left: 50%;
+	margin-left: -25px;
+	transform: rotate(180deg)
+}
+button.navbtn.left {
+	left: 2%;
+	top: 50%;
+	margin-top: -25px;
+	transform: rotate(90deg)
+}
+button.navbtn.right {
+	right: 2%;
+	top: 50%;
+	margin-top: -25px;
+	transform: rotate(270deg)
 }
 span.navbtn {
 	color: white;
