@@ -17,9 +17,6 @@ const LEFT = 2;
 const RIGHT = 3;
 
 const animLen = 1000;
-const safetyDelay = 10;
-// TODO: fix lag in a different way, you can see the safetyDelay vvvv
-// have background be the new image right when animation starts to prevent white bar instead of safety delay
 
 
 function onload() {
@@ -84,22 +81,28 @@ function go(dir = DOWN, toPage = -1) {
 	state = MOVING;
 	switch(dir) {
 		case LEFT:
-			$("#page" + curPage).find(".bg" + pages[curPage].cursrc).animate({
+			var curBG = pages[curPage].cursrc;
+			var nextBG = (((pages[curPage].cursrc - 1) % pages[curPage].src.length) + pages[curPage].src.length) % pages[curPage].src.length;
+			pages[curPage].cursrc = nextBG;
+			$("body").css("background-image", "url(" + pages[curPage].src[nextBG] + ")");
+			$("#page" + curPage).find(".bg" + curBG).animate({
 				left: "100%"
 			}, animLen, function() {});
-			pages[curPage].cursrc = (((pages[curPage].cursrc - 1) % pages[curPage].src.length) + pages[curPage].src.length) % pages[curPage].src.length;
-			console.log(pages[curPage].cursrc);
-			$("#page" + curPage).find(".bg" + pages[curPage].cursrc).css({
+			$("#page" + curPage).find(".bg" + nextBG).css({
 				"left": "-100%"
 			});
-			$("#page" + curPage).find(".bg" + pages[curPage].cursrc).animate({
-				left: "0%"
+			$("#page" + curPage).find(".bg" + nextBG).animate({
+				"left": "0%"
 			}, animLen, function() {
 				state = READY;
 			});
 			return;
 		case RIGHT:
-			$("#page" + curPage).find(".bg" + pages[curPage].cursrc).animate({
+			var curBG = pages[curPage].cursrc;
+			var nextBG = (pages[curPage].cursrc + 1) % pages[curPage].src.length;
+			pages[curPage].cursrc = nextBG;
+			$("body").css("background-image", "url(" + pages[curPage].src[nextBG] + ")");
+			$("#page" + curPage).find(".bg" + curBG).animate({
 				left: "-100%"
 			}, animLen, function() {
 				$(this).css({
@@ -107,8 +110,7 @@ function go(dir = DOWN, toPage = -1) {
 				});
 				state = READY;
 			});
-			pages[curPage].cursrc = (pages[curPage].cursrc + 1) % pages[curPage].src.length;
-			$("#page" + curPage).find(".bg" + pages[curPage].cursrc).animate({
+			$("#page" + curPage).find(".bg" + nextBG).animate({
 				left: "0%"
 			}, animLen, function() {});
 			return;
@@ -117,14 +119,13 @@ function go(dir = DOWN, toPage = -1) {
 				state = READY;
 				return;
 			}
+			$("body").css("background-image", "url(" + pages[curPage - 1].src[pages[curPage - 1].cursrc] + ")");
+			$("#page" + curPage).animate({
+				top: "100%"
+			}, animLen, function() {
+				state = READY;
+			});
 			curPage--;
-			setTimeout(function() {
-				$("#page" + (curPage + 1)).animate({
-					top: "100%"
-				}, animLen, function() {
-					state = READY;
-				});
-			}, safetyDelay);
 			console.log("go(): is going UP to page " + curPage);
 			$("#page" + curPage).animate({
 				top: "0%"
@@ -135,14 +136,13 @@ function go(dir = DOWN, toPage = -1) {
 				state = READY;
 				return;
 			}
+			$("body").css("background-image", "url(" + pages[curPage + 1].src[pages[curPage + 1].cursrc] + ")");
+			$("#page" + curPage).animate({
+				top: "-100%"
+			}, animLen, function() {
+				state = READY;
+			});
 			curPage++;
-			setTimeout(function() {
-				$("#page" + (curPage - 1)).animate({
-					top: "-100%"
-				}, animLen, function() {
-					state = READY;
-				});
-			}, safetyDelay);
 			console.log("go(): is going DOWN to page " + curPage);
 			$("#page" + curPage).animate({
 				top: "0%"

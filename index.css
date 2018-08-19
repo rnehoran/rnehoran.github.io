@@ -5,6 +5,9 @@ body {
     margin: 0;
     height: 100%;
     overflow: hidden;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: bottom;
 }
 .page, .bg {
     margin: 0;
