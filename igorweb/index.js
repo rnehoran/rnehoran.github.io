@@ -321,7 +321,7 @@ function execute(onResponse) {
             // if (hasTimedOut) return;
             // clearTimeout(timeout);
     setTimeout(function() {
-        var extra = reservations;
+        var extra = reservations.slice();
         switch (commandObj.Command) {
             case "sub":
                 var nodeList = [];
@@ -333,8 +333,7 @@ function execute(onResponse) {
                         nodeList.push(i);
                     }
                 }
-                reservations.push({"Name": commandObj.Name, "Owner": commandObj.Owner, "StartInt": 0 + commandObj.Start, "EndInt": 3600000 + commandObj.Start, "Nodes": nodeList});
-                sortReservations();
+                extra.push({"Name": commandObj.Name, "Owner": commandObj.Owner, "StartInt": 0 + commandObj.Start, "EndInt": 3600000 + commandObj.Start, "Nodes": nodeList});
                 break;
             case "spec":
                 extra = [
@@ -351,47 +350,46 @@ function execute(onResponse) {
                 ];
                 break;
             case "del":
-                reservations.splice(commandObj.Index, 1);
-                sortReservations();
+                extra.splice(commandObj.Index, 1);
                 break;
             case "power":
                 var nodeList;
                 if (commandObj.isByRes) {
-                    nodeList = reservations[getResIndexByName(commandObj.ReservationName)].Nodes;
+                    nodeList = extra[getResIndexByName(commandObj.ReservationName)].Nodes;
                 } else {
                     nodeList = getNodesFromRangeString(commandObj.Nodes);
                 }
                 switch (commandObj.Type) {
                     case "on":
-                    for (var i = 0; i < nodeList.length; i++) {
-                        var ind = reservations[0].Nodes.indexOf(nodeList[i]);
-                        if (ind === -1) continue;
-                        reservations[0].Nodes.splice(ind, 1);
-                    }
-                    break;
-                    case "cycle":
-                    setTimeout(function() {
                         for (var i = 0; i < nodeList.length; i++) {
-                            var ind = reservations[0].Nodes.indexOf(nodeList[i]);
+                            var ind = extra[0].Nodes.indexOf(nodeList[i]);
                             if (ind === -1) continue;
-                            reservations[0].Nodes.splice(ind, 1);
+                            extra[0].Nodes.splice(ind, 1);
                         }
-                        showReservations();
-                    }, 5000);
+                        break;
+                    case "cycle":
+                        setTimeout(function() {
+                            var resCopy = reservations.slice();
+                            for (var i = 0; i < nodeList.length; i++) {
+                                var ind = resCopy[0].Nodes.indexOf(nodeList[i]);
+                                if (ind === -1) continue;
+                                resCopy[0].Nodes.splice(ind, 1);
+                            }
+                            parseReservationData(resCopy);
+                        }, 5000);
                     case "off":
-                    for (var i = 0; i < nodeList.length; i++) {
-                        var ind = reservations[0].Nodes.indexOf(nodeList[i]);
-                        if (ind != -1) continue;
-                        reservations[0].Nodes.push(nodeList[i]);
-                    }
-                    break
+                        for (var i = 0; i < nodeList.length; i++) {
+                            var ind = extra[0].Nodes.indexOf(nodeList[i]);
+                            if (ind != -1) continue;
+                            extra[0].Nodes.push(nodeList[i]);
+                        }
+                        break
                 }
                 break;
             case "extend":
-                reservations[getResIndexByName(commandObj.Name)].EndInt += commandObj.Length;
+                extra[getResIndexByName(commandObj.Name)].EndInt += commandObj.Length;
                 break;
         }
-        showReservations();
         response = {"Success": true, "Message": "", "Extra": extra};
         onResponse();
     }, 700);
@@ -448,7 +446,7 @@ function getReservations() {
 // update reservation data displayed on page only if reservation data changed
 function parseReservationData(resArray) {
     newReservations = sortReservations(resArray);
-    if (!equalReservations(reservations, newReservations)) {
+    // if (!equalReservations(reservations, newReservations)) {
         // save current selection information so it can be reselected when
         //      html is regenerated
         var curResName = "";
@@ -476,7 +474,7 @@ function parseReservationData(resArray) {
                 select(getObjFromNodeIndex(selectedNodestmp[i]));
             }
         }
-    }
+    // }
 }
 
 // check if two reservation arrays are equal
@@ -582,7 +580,7 @@ function updateNodeListField(id = "dashw") {
 //      start time, then
 //      number of nodes, then
 //      reservation name
-function sortReservations(resArray = reservations) {
+function sortReservations(resArray = reservations.slice()) {
     resArray.sort(function (a, b) {
         if (a.Name === "") return -1;
         if (b.Name === "") return 1;
