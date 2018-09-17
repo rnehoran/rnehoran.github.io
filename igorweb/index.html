@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:600i,800" rel="stylesheet">
+</head>
+<body style="background-color: whitesmoke">
+    <nav class="navbar fixed-top navbar-dark">
+        <span class="navbar-brand mdl" style="margin-left: 10%; color: white; font-size: 2.25em; font-family: 'Montserrat', sans-serif;"><b class="mdl">Igor</b><i>Web</i></span>
+        <span id="selecttext" class="mdl navbar-item" style="color: white; font-size: 1.25em; font-weight: bold; display: none;"></span>
+        <button id="keybtn" class="active navbar btn btn-outline-light mdl" style="margin-right: 18%" data-toggle="tooltip" data-placement="bottom" title="Show/hide key">Key</button>
+        <div id="newbutton" class="clickable mdl" data-toggle="tooltip" data-placement="bottom" title="Make a new reservation">+</div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <div class="row" style="margin-top: 8em">
+                    <div class="col">
+                        <div id="nodegridcard" class="card mx-auto text-center" style="width: 1000px; margin-bottom: 3em; background-color: #e7ccff; border: none;">
+                            <div class="card-body">
+                                <div id="nodegrid" class="row" style="margin: 0.5em; min-height: 400px;">
+                                    <!-- Grid of nodes -->
+                                </div>
+                            </div>
+                        </div>
+                        <div id="key" class="card mx-auto text-center" style="width: 400px; margin-bottom: 3em; border: none;">
+                            <div class="card-body">
+                                <table class="table table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td class="mdl key available clickable tdhover headtext">
+                                                Available
+                                            </td>
+                                            <td class="mdl key reserved clickable tdhover headtext">
+                                                Reserved
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="mdl key up clickable tdhover headtext">
+                                                Up
+                                            </td>
+                                            <td class="mdl key available up clickable tdhover">
+                                                <div class="mdl mx-auto keycolor available up unselected">
+                                                </div>
+                                            </td>
+                                            <td class="mdl key reserved up clickable tdhover">
+                                                <div class="mdl mx-auto keycolor reserved up unselected">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="mdl key down clickable tdhover headtext">
+                                                Down
+                                            </td>
+                                            <td class="mdl key available down clickable tdhover">
+                                                <div class="mdl mx-auto keycolor available down unselected">
+                                                </div>
+                                            </td>
+                                            <td class="mdl key reserved down clickable tdhover">
+                                                <div class="mdl mx-auto keycolor reserved down unselected">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card mx-auto" style="width: 800px; margin-bottom: 4em;">
+                            <div class="card-body">
+                                <div id="table" class="row" style="margin: 0.5em; opacity: 1;">
+                                    <table class="table table-hover table-borderless">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Owner</th>
+                                                <th scope="col">Start Time</th>
+                                                <th scope="col">End Time</th>
+                                                <th scope="col"># of Nodes</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="res_table">
+                                            <!-- Reservation table -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
+    <div class="modal fade mdl" id="newresmodal" tabindex="-1" role="dialog" aria-labelledby="New Reservation" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mdl" role="document">
+            <div class="modal-content mdl">
+                <div class="modal-header m-3 mdl">
+                    <h5 class="modal-title text-center col-12 mdl" id="modaltitle"><b class="mdl" id="newresmaintitle">New Reservation</b><b class="mdl" id="newresspectitle" style="display: none;">Available Reservations</b></h5>
+                    <button type="button" class="close mdl" data-dismiss="modal" aria-label="Close" style="position: absolute; right: 15px; top: 10px;">
+                        <span class="mdl" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body m-3 mdl">
+                    <form id="newresmain" class="mdl">
+                        <div class="form-group mdl">
+                            <div class="input-group mdl" data-toggle="tooltip" data-placement="bottom" title="Reservation name">
+                                <div class="input-group-prepend mdl">
+                                    <div class="input-group-text mdl"><code id="dashrcode" class="mdl">-r</code></div>
+                                </div>
+                                <input id="dashr" type="text" class="dash form-control mdl" placeholder="Reservation name" autofocus>
+                            </div>
+                        </div>
+                        <div class="mdl btn-group" role="group" aria-label="Use kernel and initrd or Cobbler profile?" style="width: 100%; margin-bottom: 0;">
+                            <button id="nrmodalki" type="button" class="modalswitch btn btn-light mdl" style="width: 50%;">Use kernel and initrd</button>
+                            <button id="nrmodalcobbler" type="button" class="modalswitch btn btn-light mdl" style="width: 50%;">Use Cobbler profile</button>
+                        </div>
+                        <div class="form-group switchki mdl" style="margin-bottom: 10px;">
+                            <div id="dashkparent" class="input-group mdl" data-toggle="tooltip" data-placement="bottom" title="Location of the kernel the nodes should boot. This kernel will be copied to a separate directory for use.">
+                                <div class="input-group-prepend mdl">
+                                    <div class="input-group-text mdl">
+                                        <code id="dashkcode" class="mdl">-k</code>
+                                    </div>
+                                </div>
+                                <input id="dashk" type="text" class="dash form-control mdl" value="/file.kernel" placeholder="Kernel path" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group switchki mdl">
+                            <div id="dashiparent" class="input-group mdl" data-toggle="tooltip" data-placement="bottom" title="Location of the initrd the nodes should boot. This file will be copied to a separate directory for use.">
+                                <div class="input-group-prepend mdl">
+                                    <div class="input-group-text mdl"><code id="dashicode" class="mdl">-i</code></div>
+                                </div>
+                                <input id="dashi" type="text" class="dash form-control mdl" value="/file.initrd" placeholder="Initrd path" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group switchcobbler mdl">
+                            <div id="dashpparent" class="input-group mdl">
+                                <div class="input-group-prepend mdl">
+                                    <div class="input-group-text mdl"><code id="dashpcode" class="mdl">-p</code></div>
+                                </div>
+                                <input id="dashp" type="text" class="dash form-control mdl" value="cobbler_profile" placeholder="Cobbler profile" disabled>
+                            </div>
+                        </div>
+                        <div class="mdl btn-group" role="group" aria-label="Number of nodes or node list?" style="width: 100%; margin-bottom: 0;">
+                            <button id="nrmodalnumnodes" type="button" class="modalswitch btn btn-light mdl" style="width: 50%;">Number of nodes</button>
+                            <button id="nrmodalnodelist" type="button" class="modalswitch btn btn-light mdl" style="width: 50%;">Node list</button>
+                        </div>
+                        <div class="form-group mdl switchnumnodes">
+                            <div id="dashnparent" class="input-group mdl" data-toggle="tooltip" data-placement="bottom" title="Number of nodes">
+                                <div class="input-group-prepend mdl">
+                                    <div class="input-group-text mdl"><code id="dashncode" class="mdl">-n</code></div>
+                                </div>
+                                <input id="dashn" type="number" class="dash form-control mdl" min="1" placeholder="Number of nodes">
+                            </div>
+                        </div>
+                        <div class="form-group mdl switchnodelist">
+                            <div id="dashwparent" class="input-group mdl" data-toggle="tooltip" data-placement="bottom" title="Node list, e.g. 34, 57, 158 ...">
+                                <div class="input-group-prepend mdl">
+                                    <div class="input-group-text mdl"><code id="dashwcode" class="mdl">-w</code></div>
+                                </div>
+                                <input id="dashw" type="text" class="dash form-control mdl" placeholder="Node list">
+                            </div>
+                        </div>
+                        <i class="mb-2 mdl">Optional:</i>
+                        <div class="mb-4 mdl" style="border-top: 1px solid #e9ecef; border-bottom: 1px solid #e9ecef; padding-top: 5px;">
+                            <div class="form-group mdl">
+                                <div class="input-group mdl" data-toggle="tooltip" data-placement="bottom" title="e.g. console=tty0">
+                                    <div class="input-group-prepend mdl">
+                                        <div class="input-group-text mdl"><code id="dashccode" class="mdl" style="color: royalblue;">-c</code></div>
+                                    </div>
+                                    <input id="dashc" type="text" class="dash form-control mdl" placeholder="Command line arguments" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group mdl">
+                                <div class="input-group mdl" data-toggle="tooltip" data-placement="bottom" title="Time denominations should be specified in days(d), hours(h), and minutes(m), in that order. Unitless numbers are treated as minutes. Days are defined as 24*60 minutes. Example: To make a reservation for 7 days: 7d. To make a reservation for 4 days, 6 hours, 30 minutes: 4d6h30m (default = 60m).">
+                                    <div class="input-group-prepend mdl">
+                                        <div class="input-group-text mdl"><code id="dashtkcode" class="mdl" style="color: royalblue;">-t</code></div>
+                                    </div>
+                                    <input id="dasht" type="text" class="dash form-control mdl" placeholder="Reservation time" value="60m" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group mdl">
+                                <div class="input-group mdl" data-toggle="tooltip" data-placement="bottom" title="Indicates that the reservation should take place on or after the specified time, given in the format '2017-Jan-2-15:04'. Especially useful on Speculate.">
+                                    <div class="input-group-prepend mdl">
+                                        <div class="input-group-text mdl"><code id="dashacode" class="mdl" style="color: royalblue;">-a</code></div>
+                                    </div>
+                                    <input id="dasha" type="text" class="dash form-control mdl" placeholder="After this date" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="mdl" id="newresspec" style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #e9ecef; display: none;">
+                        <table class="mdl table table-borderless">
+                            <thead class="mdl">
+                                <tr class="mdl">
+                                    <th class="mdl" scope="col">Start Time</th>
+                                    <th class="mdl" scope="col">End Time</th>
+                                    <th class="mdl" scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="mdl" id="spec_table">
+                                <tr class="mdl">
+                                    <td class="align-middle mdl">
+                                    </td>
+                                    <td class="align-middle mdl">
+                                    </td>
+                                   <td class="mdl"><button type="button" style="background-color: #a975d6; border-color: #a975d6; margin-left: 38px;" class="modalbtn specreserve igorbtn btn btn-primary mdl modalcommand reserve" disabled><span class="mdl mdlcmdtext">Reserve</span><div style="visibility: hidden" class="mdl loader"></div></button></td>
+                                </tr>
+                                <tr class="mdl">
+                                    <td class="align-middle mdl">
+                                    </td>
+                                    <td class="align-middle mdl">
+                                    </td>
+                                   <td class="mdl"><button type="button" style="background-color: #a975d6; border-color: #a975d6; margin-left: 38px;" class="modalbtn specreserve igorbtn btn btn-primary mdl modalcommand reserve" disabled><span class="mdl mdlcmdtext">Reserve</span><div style="visibility: hidden" class="mdl loader"></div></button></td>
+                                </tr>
+                                <tr class="mdl">
+                                    <td class="align-middle mdl">
+                                    </td>
+                                    <td class="align-middle mdl">
+                                    </td>
+                                   <td class="mdl"><button type="button" style="background-color: #a975d6; border-color: #a975d6; margin-left: 38px;" class="modalbtn specreserve igorbtn btn btn-primary mdl modalcommand reserve" disabled><span class="mdl mdlcmdtext">Reserve</span><div style="visibility: hidden" class="mdl loader"></div></button></td>
+                                </tr>
+                                <tr class="mdl">
+                                    <td class="align-middle mdl">
+                                    </td>
+                                    <td class="align-middle mdl">
+                                    </td>
+                                   <td class="mdl"><button type="button" style="background-color: #a975d6; border-color: #a975d6; margin-left: 38px;" class="modalbtn specreserve igorbtn btn btn-primary mdl modalcommand reserve" disabled><span class="mdl mdlcmdtext">Reserve</span><div style="visibility: hidden" class="mdl loader"></div></button></td>
+                                </tr>
+                                <tr class="mdl">
+                                    <td class="align-middle mdl">
+                                    </td>
+                                    <td class="align-middle mdl">
+                                    </td>
+                                   <td class="mdl"><button type="button" style="background-color: #a975d6; border-color: #a975d6; margin-left: 38px;" class="modalbtn specreserve igorbtn btn btn-primary mdl modalcommand reserve" disabled><span class="mdl mdlcmdtext">Reserve</span><div style="visibility: hidden" class="mdl loader"></div></button></td>
+                                </tr>
+                                <tr class="mdl">
+                                    <td class="align-middle mdl">
+                                    </td>
+                                    <td class="align-middle mdl">
+                                    </td>
+                                   <td class="mdl"><button type="button" style="background-color: #a975d6; border-color: #a975d6; margin-left: 38px;" class="modalbtn specreserve igorbtn btn btn-primary mdl modalcommand reserve" disabled><span class="mdl mdlcmdtext">Reserve</span><div style="visibility: hidden" class="mdl loader"></div></button></td>
+                                </tr>
+                                <tr class="mdl">
+                                    <td class="align-middle mdl">
+                                    </td>
+                                    <td class="align-middle mdl">
+                                    </td>
+                                   <td class="mdl"><button type="button" style="background-color: #a975d6; border-color: #a975d6; margin-left: 38px;" class="modalbtn specreserve igorbtn btn btn-primary mdl modalcommand reserve" disabled><span class="mdl mdlcmdtext">Reserve</span><div style="visibility: hidden" class="mdl loader"></div></button></td>
+                                </tr>
+                                <tr class="mdl">
+                                    <td class="align-middle mdl">
+                                    </td>
+                                    <td class="align-middle mdl">
+                                    </td>
+                                   <td class="mdl"><button type="button" style="background-color: #a975d6; border-color: #a975d6; margin-left: 38px;" class="modalbtn specreserve igorbtn btn btn-primary mdl modalcommand reserve" disabled><span class="mdl mdlcmdtext">Reserve</span><div style="visibility: hidden" class="mdl loader"></div></button></td>
+                                </tr>
+                                <tr class="mdl">
+                                    <td class="align-middle mdl">
+                                    </td>
+                                    <td class="align-middle mdl">
+                                    </td>
+                                   <td class="mdl"><button type="button" style="background-color: #a975d6; border-color: #a975d6; margin-left: 38px;" class="modalbtn specreserve igorbtn btn btn-primary mdl modalcommand reserve" disabled><span class="mdl mdlcmdtext">Reserve</span><div style="visibility: hidden" class="mdl loader"></div></button></td>
+                                </tr>
+                                <tr class="mdl">
+                                    <td class="align-middle mdl">
+                                    </td>
+                                    <td class="align-middle mdl">
+                                    </td>
+                                   <td class="mdl"><button type="button" style="background-color: #a975d6; border-color: #a975d6; margin-left: 38px;" class="modalbtn specreserve igorbtn btn btn-primary mdl modalcommand reserve" disabled><span class="mdl mdlcmdtext">Reserve</span><div style="visibility: hidden" class="mdl loader"></div></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card commandline mdl"><code id="commandline" class="mdl" style="color: seagreen;"></code></div>
+                    <div class="card commandline mdl responseparent" style="display: none; margin-top: 20px;">
+                        <table class="mdl" style="width: 100%;">
+                            <tbody class="mdl">
+                                <tr class="mdl">
+                                    <td style="word-break: break-all;" class="mdl">
+                                        <code class="response mdl" style="color: white;"></code>
+                                    </td>
+                                    <td data-toggle="tooltip" data-placement="bottom" title="Copy to clipboard" class="mdl" style="vertical-align: top;">
+                                        <svg class="copy mdl clickable" style="width:24px;height:24px" viewBox="0 0 24 24">
+                                            <path class="mdl" fill="#ffffff" d="M16,15H12V18L7,13L12,8V11H16M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" />
+                                        </svg>
+                                        <span class="mdl copytooltip" style="opacity: 0; display: none;">Copied!</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer m-3 mdl">
+                    <button type="button" class="modalbtn igorbtn btn btn-secondary mr-auto mdl cancel" id="newrescancel" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="modalbtn igorbtn btn btn-secondary mr-auto mdl" id="newresback" style="display: none;">Back</button>
+                    <button type="button" style="background-color: #ff902d; border-color: #ff902d;" class="modalbtn newresmodalgobtn igorbtn btn btn-primary mdl modalcommand speculate" id="speculate" disabled><span class="mdl mdlcmdtext speculate">Speculate</span><div style="visibility: hidden" class="mdl loader speculate"></div></button>
+                    <button type="button" style="background-color: #a975d6; border-color: #a975d6;" class="modalbtn newresmodalgobtn igorbtn btn btn-primary mdl modalcommand" id="reserve" disabled><span class="mdl mdlcmdtext">Reserve</span><div style="visibility: hidden" class="mdl loader"></div></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade mdl" id="powermodal" tabindex="-1" role="dialog" aria-labelledby="Power-Cycle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mdl" role="document">
+            <div class="modal-content mdl">
+                <div class="modal-header m-3 mdl">
+                    <h5 class="modal-title text-center col-12 mdl" id="pmodaltitle"><b class="mdl">Power-Cycle</b></h5>
+                    <button type="button" class="close mdl" data-dismiss="modal" aria-label="Close" style="position: absolute; right: 15px; top: 10px;">
+                        <span class="mdl" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body m-3 mdl">
+                    <form class="mdl">
+                        <div class="mdl btn-group" role="group" aria-label="By reservation or node list?" style="width: 100%; margin-bottom: 0;">
+                            <button id="pmodalres" type="button" class="modalswitch btn btn-light mdl" style="width: 50%;">By Reservation</button>
+                            <button id="pmodalnodelist" type="button" class="modalswitch btn btn-light mdl" style="width: 50%;">By Node List</button>
+                        </div>
+                        <div id="pdashrfg" class="form-group mdl">
+                            <div class="input-group mdl" data-toggle="tooltip" data-placement="bottom" title="Reservation name">
+                                <div class="input-group-prepend mdl">
+                                    <div class="input-group-text mdl"><code id="pdashrcode" class="mdl">-r</code></div>
+                                </div>
+                                <input id="pdashr" type="text" class="pdash form-control mdl" placeholder="Reservation name" autofocus>
+                            </div>
+                        </div>
+                        <div id="pdashnfg" class="form-group mdl nodelistoption2">
+                            <div id="pdashnparent" class="input-group mdl" data-toggle="tooltip" data-placement="bottom" title="Node list, e.g. 34, 57, 158 ...">
+                                <div class="input-group-prepend mdl">
+                                    <div class="input-group-text mdl"><code id="pdashncode" class="mdl">-n</code></div>
+                                </div>
+                                <input id="pdashn" type="text" class="pdash form-control mdl" placeholder="Node list">
+                            </div>
+                        </div>
+                    </form>
+                    <div class="card commandline mdl"><code id="pcommandline" class="mdl" style="color: seagreen;"></code></div>
+                    <div class="card commandline mdl responseparent" style="display: none; margin-top: 20px;">
+                        <table class="mdl" style="width: 100%;">
+                            <tbody class="mdl">
+                                <tr class="mdl">
+                                    <td style="word-break: break-all;" class="mdl">
+                                        <code class="response mdl" style="color: white;"></code>
+                                    </td>
+                                    <td class="copy mdl clickable" data-toggle="tooltip" data-placement="bottom" title="Copy to clipboard" style="vertical-align: top;">
+                                        <svg class="mdl" style="width:24px;height:24px" viewBox="0 0 24 24">
+                                            <path class="mdl" fill="#ffffff" d="M16,15H12V18L7,13L12,8V11H16M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" />
+                                        </svg>
+                                        <span class="mdl copytooltip" style="opacity: 0; display: none;">Copied!</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer m-3 mdl">
+                    <button type="button" class="modalbtn igorbtn btn btn-secondary mr-auto mdl cancel" data-dismiss="modal">Cancel</button>
+                    <button type="button" style="background-color: mediumseagreen; border-color: mediumseagreen;" class="modalbtn powermodalgobtn igorbtn btn btn-primary mdl modalcommand" id="on" disabled><span class="mdl mdlcmdtext">On</span><div style="visibility: hidden" class="mdl loader"></div></button>
+                    <button type="button" style="background-color: lightcoral; border-color: lightcoral;" class="modalbtn powermodalgobtn igorbtn btn btn-primary mdl modalcommand" id="off" disabled><span class="mdl mdlcmdtext">Off</span><div style="visibility: hidden" class="mdl loader"></div></button>
+                    <button type="button" class="modalbtn powermodalgobtn igorbtn btn btn-primary mdl modalcommand" id="cycle" disabled><span class="mdl mdlcmdtext">Cycle</span><div style="visibility: hidden" class="mdl loader"></div></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade mdl" id="deleteresmodal" tabindex="-1" role="dialog" aria-labelledby="Delete Reservation?" aria-hidden="true">
+        <div id="deletemodaldialog" class="modal-dialog modal-sm modal-dialog-centered mdl" role="document">
+            <div class="modal-content mdl">
+                <div class="modal-header m-3 mdl" style="padding-bottom: 0px; margin-bottom: 5px !important; border: none;">
+                    <h5 class="modal-title text-center col-12 mdl" id="dmodaltitle"><b class="mdl">Delete reservation?</b></h5>
+                    <button type="button" class="close mdl" data-dismiss="modal" aria-label="Close" style="position: absolute; right: 15px; top: 10px;">
+                        <span class="mdl" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="card commandline mdl responseparent" style="display: none; margin: 20px;">
+                    <table class="mdl" style="width: 100%;">
+                        <tbody class="mdl">
+                            <tr class="mdl">
+                                <td style="word-break: break-all;" class="mdl">
+                                    <code class="response mdl" style="color: white;"></code>
+                                </td>
+                                <td data-toggle="tooltip" data-placement="bottom" title="Copy to clipboard" class="mdl" style="vertical-align: top;">
+                                    <svg class="copy mdl clickable" style="width:24px;height:24px" viewBox="0 0 24 24">
+                                        <path class="mdl" fill="#ffffff" d="M16,15H12V18L7,13L12,8V11H16M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" />
+                                    </svg>
+                                    <span class="mdl copytooltip" style="opacity: 0; display: none;">Copied!</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer m-3 mdl" style="padding-top: 20px; margin-top: 20px;">
+                    <button type="button" class="modalbtn igorbtn btn btn-secondary mr-auto mdl cancel" data-dismiss="modal">Cancel</button>
+                    <button type="button" style="background-color: #a975d6; border-color: #a975d6;" class="modalbtn deleteresmodalgobtn igorbtn btn btn-primary mdl modalcommand" id="delete"><span class="mdl mdlcmdtext">Delete</span><div style="visibility: hidden" class="mdl loader"></div></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade mdl" id="extendmodal" tabindex="-1" role="dialog" aria-labelledby="Extend Reservation" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered mdl" role="document">
+            <div class="modal-content mdl">
+                <div class="modal-header m-3 mdl">
+                    <h5 class="modal-title text-center col-12 mdl" id="emodaltitle"><b class="mdl">Extend Reservation</b></h5>
+                    <button type="button" class="close mdl" data-dismiss="modal" aria-label="Close" style="position: absolute; right: 15px; top: 10px;">
+                        <span class="mdl" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body m-3 mdl">
+                    <form class="mdl">
+                        <div class="form-group mdl">
+                            <div class="input-group mdl" data-toggle="tooltip" data-placement="bottom" title="Reservation name">
+                                <div class="input-group-prepend mdl">
+                                    <div class="input-group-text mdl"><code id="edashrcode" class="mdl">-r</code></div>
+                                </div>
+                                <input id="edashr" type="text" class="edash form-control mdl" placeholder="Reservation name" autofocus>
+                            </div>
+                        </div>
+                        <i class="mb-2 mdl">Optional:</i>
+                        <div class="mb-4 mdl" style="border-top: 1px solid #e9ecef; border-bottom: 1px solid #e9ecef; padding-top: 5px;">
+                            <div class="form-group mdl">
+                                <div class="input-group mdl" data-toggle="tooltip" data-placement="bottom" title="Time denominations should be specified in days(d), hours(h), and minutes(m), in that order. Unitless numbers are treated as minutes. Days are defined as 24*60 minutes. Example: To make a reservation for 7 days: -t 7d. To make a reservation for 4 days, 6 hours, 30 minutes: -t 4d6h30m (default = 60m).">
+                                    <div class="input-group-prepend mdl">
+                                        <div class="input-group-text mdl"><code id="edashtcode" class="mdl" style="color: royalblue;">-t</code></div>
+                                    </div>
+                                    <input id="edasht" type="text" class="edash form-control mdl" value="60m" placeholder="Extension time" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="card commandline mdl"><code id="ecommandline" class="mdl" style="color: seagreen;"></code></div>
+                    <div class="card commandline mdl responseparent" style="display: none; margin-top: 20px;">
+                        <table class="mdl" style="width: 100%;">
+                            <tbody class="mdl">
+                                <tr class="mdl">
+                                    <td style="word-break: break-all;" class="mdl">
+                                        <code class="response mdl" style="color: white;"></code>
+                                    </td>
+                                    <td class="mdl" data-toggle="tooltip" data-placement="bottom" title="Copy to clipboard" style="vertical-align: top;">
+                                        <svg class="copy mdl clickable" svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                                            <path class="mdl" fill="#ffffff" d="M16,15H12V18L7,13L12,8V11H16M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" />
+                                        </svg>
+                                        <span class="mdl copytooltip" style="opacity: 0; display: none;">Copied!</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer m-3 mdl">
+                    <button type="button" class="modalbtn igorbtn btn btn-secondary mr-auto mdl cancel" data-dismiss="modal">Cancel</button>
+                    <button type="button" style="background-color: #a975d6; border-color: #a975d6;" class="modalbtn extendmodalgobtn igorbtn btn btn-primary mdl modalcommand" id="extend" disabled><span class="mdl mdlcmdtext">Extend</span><div style="visibility: hidden" class="mdl loader"></div></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="actionbar" class="mx-auto fixed-bottom card actionbar">
+        <!-- Action bar -->
+        <button id="deleteresbtn" class="igorbtn btn btn-outline-light actionbar resaction" data-focus="false" data-toggle="modal" data-target="#deleteresmodal">Delete Reservation</button>
+        <button id="powerbtn" class="igorbtn btn btn-outline-light actionbar" data-focus="false" data-toggle="modal" data-target="#powermodal">Power-Cycle Nodes</button>
+        <button id="extendresbtn" class="igorbtn btn btn-outline-light actionbar resaction" data-focus="false" data-toggle="modal" data-target="#extendmodal">Extend Reservation</button>
+        <span class="close clickable closeactionbar">&times;</span>
+    </div>
+</body>
+<script>
+    var startNode = 1;
+    var endNode = 306;
+    var rackWidth = 18;
+    var cluster = "cl";
+    var reservations = [
+        {"Nodes": [118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 290, 291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 304, 305, 306]},
+        {"Name": "test", "Owner": "hsmith", "StartInt": -100000, "EndInt": 3600000, "Nodes": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]},
+        {"Name": "webdev", "Owner": "djohnson", "StartInt": -50000, "EndInt": 3600000, "Nodes": [42, 43, 44, 45, 46]},
+        {"Name": "program", "Owner": "lwilliams", "StartInt": 0, "EndInt": 3600000, "Nodes": [145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190]},
+        {"Name": "systemd", "Owner": "mgarcia", "StartInt": 100000, "EndInt": 3600000, "Nodes": [235, 237, 239, 241, 243, 245, 247, 249, 251]},
+        {"Name": "igorweb", "Owner": "rnehoran", "StartInt": 1000000, "EndInt": 3600000, "Nodes": [114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157]},
+        {"Name": "runit", "Owner": "sclark", "StartInt": 2000000, "EndInt": 3600000, "Nodes": [73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 289, 290, 291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 304, 305, 306]},
+        {"Name": "suite", "Owner": "tmartinez", "StartInt": 3000000, "EndInt": 3600000, "Nodes": [40, 50, 57, 79, 80, 95, 100, 122, 130, 138, 185, 221, 247, 248, 250, 276]},
+        {"Name": "godoit", "Owner": "jtaylor", "StartInt": 4000000, "EndInt": 3600000, "Nodes": [279]}
+    ];
+</script>
+<script src="index.js"></script>
+</html>
